@@ -80,17 +80,19 @@ public class Square {
 			}
 			break;
 
-		// currently doesn't support checking LEFT or RIGHT
-		// MODIFY so that it correctly returns if it can move left or right
 		case LEFT:
-			if (col == 0 || grid.isSet(row, col - 1)) {
+			if (col == 0 || grid.isSet(row, col - 1))
 				move = false;
-			}
 			break;
+			
 		case RIGHT:
-			if (col == Grid.WIDTH - 1 || grid.isSet(row, col + 1)) {
+			if (col == (Grid.WIDTH - 1) || grid.isSet(row, col + 1))
 				move = false;
-			}
+			break;
+			
+		case DROP:
+			if (row == (Grid.HEIGHT - 1) || grid.isSet(row + 1, col))
+				move = false;
 			break;
 		}
 		return move;
@@ -111,17 +113,21 @@ public class Square {
 		if (canMove(direction)) {
 			switch (direction) {
 			case DOWN:
-				row++;
+				row = row + 1;
+				break;
+				
+			case LEFT:
+				col = col - 1;
+				break;
+				
+			case RIGHT:
+				col = col + 1;
+				break;
+				
+			case DROP:
+				row = row + 1;
 				break;
 
-			// currently doesn't support moving LEFT or RIGHT
-			// MODIFY so that the Square moves appropriately
-			case LEFT:
-				col--;
-				break;
-			case RIGHT:
-				col++;
-				break;
 			}
 		}
 	}

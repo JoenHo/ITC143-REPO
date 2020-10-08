@@ -73,7 +73,7 @@ public class LShape {
 				square[i].move(direction);
 		}
 		// if we couldn't move, see if because we're at the bottom
-		else if (direction == Direction.DOWN) {
+		else if (direction == Direction.DOWN || direction == Direction.DROP) {
 			ableToMove = false;
 		}
 	}
@@ -114,5 +114,12 @@ public class LShape {
 		}
 
 		return answer;
+	}
+	
+	/**
+	 * Return the ableToMove of this piece
+	 */
+	public boolean getAbleToMove() {
+		return ableToMove;
 	}
 }

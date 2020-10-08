@@ -84,7 +84,91 @@ public class Grid {
 	 * the top row set to empty
 	 */
 	public void checkRows() {
-		// write code to remove full rows
+		
+		// check rows from top to bottom
+		for(int row = 0; row < HEIGHT; row++) {
+			
+			// if the row is filled
+			if(isRowFilled(row)) {
+				
+				// empty the row
+				emptyRow(row);
+				
+				// move all rows above the emptied row to one line down
+				for(int copyRow = row - 1; copyRow >= 0; copyRow--) {
+					
+					// move the row one line down
+					copyRow(copyRow, copyRow + 1);
+				}
+			}
+		}
+	}
+	/**
+	 * Check if specified row is filled
+	 * @param row
+	 * 			the row in the Grid
+	 * @return
+	 * 			true if filled; false if not filled
+	 */
+	public boolean isRowFilled(int row) {
+		
+		boolean isFilled = true;
+		// check the color of each square in the row
+		for(int col = 0; col < WIDTH; col++) {
+			if(!isSet(row, col)) {
+				isFilled = false;
+				break;
+			}
+		}
+		return isFilled;
+	}
+	
+	/**
+	 * Check if specified row is empty
+	 * @param row
+	 * 			the row in the Grid
+	 * @return
+	 * 			true if empty; false if not empty
+	 */
+	public boolean isRowEmpty(int row) {
+		
+		boolean isEmpty = true;
+		// check the color of each square in the row
+		for(int col = 0; col < WIDTH; col++) {
+			if(isSet(row, col)) {
+				isEmpty = false;
+				break;
+			}
+		}
+		return isEmpty;
+	}
+	
+	/**
+	 * Empty the specified row by changing the square color to white
+	 * @param row
+	 * 			the row in the Grid
+	 */
+	public void emptyRow(int row) {
+		
+		// set white color to each square in the row
+		for(int col = 0; col < WIDTH; col++) {
+			set(row, col, Color.WHITE);
+		}
+	}
+	
+	/**
+	 * Copy the color of specified row to the other specified row
+	 * @param rowCopyFrom
+	 * 			the row you want to copy from
+  	 * @param rowCopyTo
+	 * 			the row you want to copy to
+	 */
+	public void copyRow(int rowCopyFrom, int rowCopyTo) {
+		
+		// set each column in rowCopyTo with the color get from the rowCopyFrom
+		for(int col = 0; col < WIDTH; col++) {
+			set(rowCopyTo, col, board[rowCopyFrom][col].getColor());
+		}
 	}
 
 	/**

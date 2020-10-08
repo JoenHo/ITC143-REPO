@@ -49,11 +49,12 @@ public class Game {
 	 */
 	public void movePiece(Direction direction) {
 		if (piece != null) {
-			if (direction == Direction.DROP) {
-				// move the piece down as long as it can move down
-				// while (the piece can move down) { -> use piece.canMove(Direction.DOWN)
-				// move it down -> piece.move(Direction.DOWN);
-				// }
+			// if the space key is pressed
+			if(direction == Direction.DROP) {
+				while(piece.getAbleToMove()) {
+					// move the piece down as much as possible
+					piece.move(direction);
+				}
 			} else {
 				piece.move(direction);
 			}
