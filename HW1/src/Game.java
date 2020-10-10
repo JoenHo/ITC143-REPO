@@ -53,7 +53,7 @@ public class Game {
 			if(direction == Direction.DROP) {
 				while(piece.getAbleToMove()) {
 					// move the piece down as much as possible
-					piece.move(direction);
+					piece.move(Direction.DOWN);
 				}
 			} else {
 				piece.move(direction);

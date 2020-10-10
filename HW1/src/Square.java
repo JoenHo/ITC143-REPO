@@ -123,11 +123,6 @@ public class Square {
 			case RIGHT:
 				col = col + 1;
 				break;
-				
-			case DROP:
-				row = row + 1;
-				break;
-
 			}
 		}
 	}
