@@ -2,55 +2,20 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
-/**
- * An L-Shape piece in the Tetris Game.
- * 
- * This piece is made up of 4 squares in the following configuration:
- * 
- * Sq <br>
- * Sq <br>
- * Sq Sq <br>
- * 
- * The game piece "floats above" the Grid. The (row, col) coordinates are the
- * location of the middle Square on the side within the Grid
- * 
- * @author CSC 143
- */
-public class LShape {
-	private boolean ableToMove; // can this piece move
+public abstract class AbstractPiece implements Piece {
 
-	private Square[] square; // the squares that make up this piece
+	protected boolean ableToMove; // can this piece move
+	
+//	protected boolean ableToRotate; // can this piece rotate
+
+	protected Square[] square; // the squares that make up this piece
 
 	// Made up of PIECE_COUNT squares
-	private Grid grid; // the board this piece is on
+	protected Grid grid; // the board this piece is on
 
 	// number of squares in one Tetris game piece
-	private static final int PIECE_COUNT = 4;
-
-	/**
-	 * Creates an L-Shape piece. See class description for actual location of r
-	 * and c
-	 * 
-	 * @param r
-	 *            row location for this piece
-	 * @param c
-	 *            column location for this piece
-	 * @param g
-	 *            the grid for this game piece
-	 * 
-	 */
-	public LShape(int r, int c, Grid g) {
-		grid = g;
-		square = new Square[PIECE_COUNT];
-		ableToMove = true;
-
-		// Create the squares
-		square[0] = new Square(g, r - 1, c, Color.magenta, true);
-		square[1] = new Square(g, r, c, Color.magenta, true);
-		square[2] = new Square(g, r + 1, c, Color.magenta, true);
-		square[3] = new Square(g, r + 1, c + 1, Color.magenta, true);
-	}
-
+	protected static final int PIECE_COUNT = 4;
+	
 	/**
 	 * Draws the piece on the given Graphics context
 	 */
@@ -58,6 +23,12 @@ public class LShape {
 		for (int i = 0; i < PIECE_COUNT; i++) {
 			square[i].draw(g);
 		}
+	}
+	
+	public AbstractPiece(Grid g) {
+		grid = g;
+		square = new Square[PIECE_COUNT];
+		ableToMove = true;
 	}
 
 	/**
@@ -117,9 +88,13 @@ public class LShape {
 	}
 	
 	/**
-	 * Return the ableToMove of this piece
+	 * Rotates the piece clockwise by 90 degrees
+	 * 
+	 * @param Tetris the display
 	 */
-	public boolean getAbleToMove() {
-		return ableToMove;
+	public void rotate() {
+		
 	}
+
 }
+

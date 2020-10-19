@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.util.Random;
 
 /**
  * Manages the game Tetris. Keeps track of the current piece and the grid.
@@ -14,7 +16,7 @@ public class Game {
 
 	private Tetris display; // the visual for the Tetris game
 
-	private LShape piece; // the current piece that is dropping
+	private Piece piece; // the current piece that is dropping
 
 	private boolean isOver; // has the game finished?
 
@@ -26,10 +28,47 @@ public class Game {
 	public Game(Tetris display) {
 		grid = new Grid();
 		this.display = display;
-		piece = new LShape(1, Grid.WIDTH / 2 - 1, grid);
+		piece = createRandomPiece();
 		isOver = false;
 	}
 
+	/**
+	 * Returns a random piece instance
+	 * 
+	 * @return piece instance
+	 */
+	public Piece createRandomPiece() {
+		
+		Random rand = new Random();
+		Piece piece = null;
+		
+	    switch (rand.nextInt(7)) {
+		case 0:
+			piece = new ZShape(1, Grid.WIDTH / 2 - 1, grid);
+			break;
+		case 1:
+			piece = new SquareShape(1, Grid.WIDTH / 2 - 1, grid);
+			break;
+		case 2:
+			piece = new JShape(1, Grid.WIDTH / 2 - 1, grid);
+			break;
+		case 3:
+			piece = new TShape(1, Grid.WIDTH / 2 - 1, grid);
+			break;
+		case 4:
+			piece = new SShape(1, Grid.WIDTH / 2 - 1, grid);
+			break;
+		case 5:
+			piece = new BarShape(1, Grid.WIDTH / 2 - 1, grid);
+			break;
+		case 6:
+			piece = new LShape(1, Grid.WIDTH / 2 - 1, grid);
+			break;
+	    }
+	    
+	    return piece;
+	}
+	
 	/**
 	 * Draws the current state of the game
 	 * 
@@ -51,13 +90,25 @@ public class Game {
 		if (piece != null) {
 			// if the space key is pressed
 			if(direction == Direction.DROP) {
-				while(piece.getAbleToMove()) {
+				while(piece.canMove(direction)) {
 					// move the piece down as much as possible
 					piece.move(Direction.DOWN);
 				}
 			} else {
 				piece.move(direction);
 			}
+		}
+		updatePiece();
+		display.update();
+		grid.checkRows();
+	}
+	
+	/**
+	 * Rotates the piece clockwise by 90 degrees
+	 */
+	public void rotatePiece() {
+		if (piece != null) {
+			piece.rotate();
 		}
 		updatePiece();
 		display.update();
@@ -94,7 +145,7 @@ public class Game {
 	private void updatePiece() {
 		if (piece == null) {
 			// CREATE A NEW PIECE HERE
-			piece = new LShape(1, Grid.WIDTH / 2 - 1, grid);
+			piece = createRandomPiece();
 		}
 
 		// set Grid positions corresponding to frozen piece
