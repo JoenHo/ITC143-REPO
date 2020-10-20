@@ -159,4 +159,105 @@ public class Square {
 			g.drawRect(actualX, actualY, WIDTH, HEIGHT);
 		}
 	}
+
+	/**
+	 * Rotate the square 90 degrees around the center square
+	 */
+	public void rotate(Square center) {
+		if(canRotate(center)) {
+			int newRow = center.row + (this.col - center.col);
+			int newCol = center.col + (center.row - this.row);
+			this.row = newRow;
+			this.col = newCol;
+		}
+	}
+	
+	/**
+	 * Returns true if this Square can rotate 90 degrees around the center square
+	 */
+	public boolean canRotate(Square center) {
+		int newRow = center.row + (this.col - center.col);
+		int newCol = center.col + (center.row - this.row);
+		int thisRow = this.row;
+		int thisCol = this.col;
+		boolean answer = true;
+
+		// check if the path from the location of this square 
+		// to the location of new square is empty in clockwise order
+		
+		// If this square located at upper-right of the center 
+		// (include right above the center square)			
+		if(thisRow < center.row && thisCol >= center.col) {
+			
+			// check right -> down
+			for(int i = thisCol + 1; i <= newCol; i++) {
+				if(grid.isSet(thisRow,i)) {
+					answer = false;
+				}
+			}
+				
+			for(int i = thisRow + 1; i <= newRow; i++) {
+				if(grid.isSet(i,newCol)) {
+						answer = false;
+				}
+			}	
+			
+		// If this square located at down-right of the center
+		//(include right to the center square)			
+		}else if(thisRow >= center.row && thisCol > center.col) {
+			
+			// check down -> left
+			for(int i = thisRow + 1; i <= newRow; i++) {
+				if(grid.isSet(i,thisCol)) {
+						answer = false;
+				}
+			}	
+			
+			for(int i = thisCol - 1; i >= newCol; i--) {
+				if(grid.isSet(newRow,i)) {
+					answer = false;
+				}
+			}
+				
+		// If this square located at down-left of the center
+		//(include right below the center square)				
+		}else if(thisRow > center.row && thisCol <= center.col) {
+			
+			// check left -> up
+			for(int i = thisCol - 1; i >= newCol; i--) {
+				if(grid.isSet(thisRow,i)) {
+					answer = false;
+				}
+			}
+			
+			for(int i = thisRow - 1; i >= newRow; i--) {
+				if(grid.isSet(i,newCol)) {
+						answer = false;
+				}
+			}	
+		
+		// If this square located at upper-left of the center
+		//(include left to the center square)						
+		}else if(thisRow <= center.row && thisCol < center.col){
+			
+			// check up -> right
+			for(int i = thisRow - 1; i >= newRow; i--) {
+				if(grid.isSet(i,thisCol)) {
+						answer = false;
+				}
+			}	
+			for(int i = thisCol + 1; i <= newCol; i++) {
+				if(grid.isSet(newRow,i)) {
+					answer = false;
+				}
+			}
+		
+		}else {
+			// unexpected case, return false
+			answer = false;
+		}
+		
+		return answer;
+	}
+
 }

@@ -67,7 +67,7 @@ public class EventController extends KeyAdapter implements ActionListener {
 				break;
 			// Down Key Pressed
 			case KeyEvent.VK_DOWN:
-				handleMove(Direction.DOWN);
+				handleMove(Direction.ROTATE);
 				break;
 			}
 		}

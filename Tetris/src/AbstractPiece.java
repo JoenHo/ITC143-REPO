@@ -93,8 +93,36 @@ public abstract class AbstractPiece implements Piece {
 	 * @param Tetris the display
 	 */
 	public void rotate() {
+		if (canRotate()) {
+			for (int i = 0; i < PIECE_COUNT; i++)
+				square[i].rotate(square[1]); 
+		}
+	}
+	
+	/**
+	 * Returns true if this piece can rotate
+	 */
+	public boolean canRotate() {
+
+		boolean answer = true;
+		for (int i = 0; i < PIECE_COUNT; i++) {
+			if(i==1) {
+				// skip checking for index 1
+				continue;
+			}
+			answer = answer && square[i].canRotate(square[1]);
+		}
+
+		return answer;
 		
 	}
-
+	
+	/**
+	 * returns the array of squares of the piece
+	 */
+	public Square[] getSquareArray(){	
+		return square;
+	}
+	
 }
 

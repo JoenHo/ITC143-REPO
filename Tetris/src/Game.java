@@ -89,11 +89,13 @@ public class Game {
 	public void movePiece(Direction direction) {
 		if (piece != null) {
 			// if the space key is pressed
-			if(direction == Direction.DROP) {
+			if (direction == Direction.DROP) {
 				while(piece.canMove(direction)) {
 					// move the piece down as much as possible
 					piece.move(Direction.DOWN);
 				}
+			} else if (direction == Direction.ROTATE) {
+				piece.rotate();	
 			} else {
 				piece.move(direction);
 			}

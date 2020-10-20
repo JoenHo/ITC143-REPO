@@ -20,5 +20,8 @@ public interface Piece {
 	boolean canMove(Direction direction);
 	
 	void rotate();
-
+	
+	boolean canRotate();
+	
+	Square[] getSquareArray();
 }
